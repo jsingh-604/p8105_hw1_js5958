@@ -1,13 +1,11 @@
 ---
-title: "hw1_p8105_js5958"
+title: " HW1 | P8105 | ID: js5958"
 output: github_document
-date: "2022-09-24"
 ---
 
 ```{r}
 library(tidyverse)
 library(ggplot2)
-
 ```
 
 ## Problem 1
@@ -33,21 +31,26 @@ j)
 The mean of the **flipper length** is *`r round(mean(pull(penguins, flipper_length_mm),na.rm = TRUE))`*mm.
 The standard deviation of the flipper length is  *`r round(sd(pull(penguins, flipper_length_mm), na.rm = TRUE), digits=2)`*.
 
-### First time creating scatterplot for this class 
+
+### Make a scatterplot of flipper_length_mm (y) vs bill_length_mm (x); color points using the species variable :
 ```{r Creating scatterplot, message = FALSE, warning = FALSE}
-penguin_scatterplot <- ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
+scatterplot <- ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) +
   geom_point(shape = penguins$species, size = 3) +
   ggtitle("Flipper Length vs Bill Length") + theme(plot.title = element_text(hjust = 0.5))
 
-penguin_scatterplot
+scatterplot
 ```
 
-### Saving my first ggplot (scatterplot) as PDF
-```{r Saving ggplot as PDF, message = FALSE, warning = FALSE}
-ggsave("scatter_plot.pdf", plot = penguin_scatterplot, height = 4, width = 6)
+### Saving the ggplot:
+```{r}
+ggsave("scatter_plot.pdf", plot = scatterplot)
 ```
 
 
+
+# Problem 2
+
+Creating the required dataframe:
 ```{r Creating a dataframe}
 
 set.seed(102102)
@@ -65,22 +68,35 @@ df_main
 ```
 
 ```{r}
-numeric_char = as.numeric(pull(df_main,character_vector))
-numeric_logv = as.numeric(pull(df_main,logical_vector))
-numeric_fac = as.numeric(pull(df_main, factor_vector))
+random_sample_mean = mean(pull(df_main, random_sample))
+logical_vector_mean = mean(pull(df_main, logical_vector))
+character_vector_mean = mean(pull(df_main, character_vector))
+factor_vector_mean = mean(pull(df_main, factor_vector))
+
+random_sample_mean
+logical_vector_mean
+character_vector_mean
+factor_vector_mean
 ```
+We can see that we have NA values for character_vector_mean and factor_vector_mean
 
 
+
+Applying the as.numeric function to the logical, character, and factor variables:
+```{r}
+n_char = as.numeric(pull(df_main,character_vector))
+n_log = as.numeric(pull(df_main,logical_vector))
+n_fac = as.numeric(pull(df_main, factor_vector))
+```
 ## Calculating the mean of the newly converted numeric variables 
 
 ```{r}
-mean_numchar = mean(numeric_char)
-mean_numlogic = mean(numeric_logv)
-mean_numfactor = mean(numeric_fac)
+mean_numchar = mean(n_char)
+mean_numlogic = mean(n_log)
+mean_numfactor = mean(n_fac)
 mean_numchar
+mean_numlogic
+mean_numfactor
 ```
+Since the character variable has values of strings, it is not possible to covert it to numeric using as.numeric function.  
 
-
-```{r}
-numeric_factorvec = as.numeric(as.character(pull(my, fac_vec)))
-```
